@@ -20,7 +20,10 @@ data class Weather(
     val id: Long = 0,
 
     @Json(name = "weather_state_name")
-    val state: String? = null,
+    val stateName: String? = null,
+
+    @Json(name = "weather_state_abbr")
+    val stateAbbreviated: String? = null,
 
     @Json(name = "wind_direction_compass")
     val windDirection: String? = null,

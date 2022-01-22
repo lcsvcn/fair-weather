@@ -1,15 +1,23 @@
 package com.faire.weather.adapter
 
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.faire.weather.R
 import com.faire.weather.arch.BaseViewHolder
+import com.faire.weather.arch.bind
 import com.faire.weather.data.Weather
 import com.faire.weather.adapter.WeatherListAdapter.WeatherViewHolder
+import com.faire.weather.arch.formatCelsius
+import java.util.TreeMap
 
-class WeatherListAdapter: RecyclerView.Adapter<WeatherViewHolder>() {
+
+class WeatherListAdapter : RecyclerView.Adapter<WeatherViewHolder>() {
 
     private val weatherList = mutableListOf<Weather>()
+
+    private val images by createMapImages()
 
     fun setList(list: List<Weather>) {
         weatherList.clear()
@@ -29,10 +37,47 @@ class WeatherListAdapter: RecyclerView.Adapter<WeatherViewHolder>() {
         parent: ViewGroup
     ) : BaseViewHolder(parent, R.layout.item_weather_card) {
 
-//        private val txtTitle: TextView by bind(R.id.txt_title)
+        private val txtCurrentTemperature: TextView by bind(R.id.txt_current_temperature)
+        private val txtWeatherState: TextView by bind(R.id.txt_weather_state)
+        private val txtHighTemperature: TextView by bind(R.id.txt_high_temperature)
+        private val txtLowTemperature: TextView by bind(R.id.txt_low_temperature)
+        private val imgWeatherIcon: ImageView by bind(R.id.txt_low_temperature)
 
         fun bind(weather: Weather) {
+            weather.currentTemperature?.let {
+                txtCurrentTemperature.text = it.formatCelsius()
+            }
+            weather.highTemperature?.let {
+                txtHighTemperature.text = it.formatCelsius()
+            }
+            weather.lowTemperature?.let {
+                txtLowTemperature.text = it.formatCelsius()
+            }
+            weather.stateName?.let {
+                txtWeatherState.text = it
+            }
+            weather.stateAbbreviated?.let {
+                imgWeatherIcon.setBackgroundResource(getDrawableIdFromName(it))
+            }
+        }
+    }
 
+    private fun getDrawableIdFromName(name: String): Int {
+        return images[name] ?: R.drawable.ic_launcher_background
+    }
+
+    private fun createMapImages() = lazy {
+        TreeMap<String, Int>().apply {
+            put("sn", R.drawable.ic_sn)
+            put("sl", R.drawable.ic_sl)
+            put("h", R.drawable.ic_h)
+            put("t", R.drawable.ic_t)
+            put("hr", R.drawable.ic_hr)
+            put("lr", R.drawable.ic_lr)
+            put("s", R.drawable.ic_s)
+            put("hc", R.drawable.ic_hc)
+            put("lc", R.drawable.ic_lc)
+            put("c", R.drawable.ic_c)
         }
     }
 }

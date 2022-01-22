@@ -4,6 +4,7 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="app/src/main/res/drawable-v24/bg_box_white_top_16_bottom_16.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/ic_rain.xml" value="0.18645833333333334" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.22205510894896915" />
         <entry key="app/src/main/res/layout/activity_weather_list.xml" value="0.10052083333333334" />
         <entry key="app/src/main/res/layout/item_weather_card.xml" value="0.416913550346993" />

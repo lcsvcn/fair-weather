@@ -10,18 +10,18 @@
     android:padding="16dp">
 
     <ImageView
-        android:id="@+id/img_weather"
+        android:id="@+id/img_weather_icon"
         android:layout_width="64dp"
         android:layout_height="64dp"
         android:scaleType="centerCrop"
-        android:src="@drawable/ic_rain"
+        android:src="@drawable/ic_c"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.4"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/txt_temperature"
+        android:id="@+id/txt_current_temperature"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
@@ -29,7 +29,7 @@
         android:textColor="@color/black"
         android:textSize="48sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@id/img_weather"
+        app:layout_constraintStart_toEndOf="@id/img_weather_icon"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -43,7 +43,7 @@
         android:textStyle="italic"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/txt_temperature" />
+        app:layout_constraintTop_toBottomOf="@id/txt_current_temperature" />
 
     <TextView
         android:id="@+id/txt_low_temperature"
