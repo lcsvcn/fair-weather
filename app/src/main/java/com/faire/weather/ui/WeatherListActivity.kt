@@ -11,6 +11,10 @@ import com.faire.weather.arch.visible
 import com.faire.weather.databinding.ActivityWeatherListBinding
 import com.faire.weather.viewmodel.WeatherListViewModel
 import androidx.activity.viewModels
+import com.faire.weather.R
+import retrofit2.Retrofit.Builder
+import retrofit2.converter.moshi.MoshiConverterFactory
+import androidx.appcompat.widget.SearchView
 
 class WeatherListActivity : AppCompatActivity() {
 
@@ -20,18 +24,34 @@ class WeatherListActivity : AppCompatActivity() {
 
     private var adapter by lazy { WeatherListAdapter() }
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(layout.activity_weather_list)
+
+        viewModel.setupRetrofit()
         setupViews()
+
         handleLoadingState()
         handleErrorState()
         handleEmptyListState()
+        handleScrollTopState()
     }
 
     private fun setupViews() {
         with(binding) {
             rcvWeatherList.adapter = this@WeatherListActivity.adapter
+
+            btnScrollToTop.setOnClickListener { viewModel.onScrollToTopClick() }
+            btnScrollToTop.setOnClickListener { viewModel.onScrollToTopClick() }
+            ctnSearch.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+                override fun onQueryTextSubmit(query: String): Boolean {
+                    viewModel.onQueryTextSubmit(query)
+                    return false
+                }
+
+                override fun onQueryTextChange(newText: String) = false
+            })
         }
     }
 
@@ -39,14 +59,9 @@ class WeatherListActivity : AppCompatActivity() {
         viewModel.loadingLiveData.observe(this, {
             with(binding) {
                 if (it is LoadingState.Show) {
-                    pgrLoading.visible()
-                    txtLoading.visible()
-                    it.loadingMessage?.let {
-                        txtLoading.text = it
-                    }
+                    pgrLoadingIndicator.visible()
                 } else {
-                    pgrLoading.gone()
-                    txtLoading.gone()
+                    pgrLoadingIndicator.gone()
                 }
             }
         })
@@ -55,18 +70,40 @@ class WeatherListActivity : AppCompatActivity() {
     private fun handleErrorState() {
         viewModel.errorLiveData.observe(this, {
             with(binding) {
-                it.message
+                if (it.title.isNotBlank() && it.message.isNotBlank()) {
+                    ctnAlertMessage.visible()
+                    txtTitle.text = it.title
+                    txtMessage.text = it.message
+                } else {
+                    ctnAlertMessage.gone()
+                }
             }
         })
     }
 
     private fun handleEmptyListState() {
-        viewModel.errorLiveData.observe(this, {
+        viewModel.emptyLiveData.observe(this, { isEmpty ->
             with(binding) {
-                it.message
+                if (isEmpty) {
+                    ctnAlertMessage.visible()
+                    txtTitle.text = getString(R.string.empty_title);
+                    txtTitle.text = getString(R.string.empty_message);
+                } else {
+                    ctnAlertMessage.gone()
+                }
             }
         })
     }
 
-
+    private fun handleScrollTopState() {
+        viewModel.scrollLiveData.observe(this, {
+            with(binding) {
+                ctnAppBar.setExpanded(true)
+                rcvWeatherList.apply {
+                    stopScroll()
+                    layoutManager?.scrollToPosition(0)
+                }
+            }
+        })
+    }
 }

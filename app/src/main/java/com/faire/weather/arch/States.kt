@@ -11,8 +11,6 @@ sealed class LoadingState(val loadingMessage: String? = null) : ViewState {
     data class HideWithMessage(val message: String) : LoadingState(message)
 }
 
-open class ErrorState(val message: String) : ViewState
-
-open class FinishState(val activityResult: Int = Activity.RESULT_OK, val mapExtras: Map<String, Any>? = null) : ViewState
+open class ErrorState(val title:String, val message: String) : ViewState
 
 object EmptyState: ViewState

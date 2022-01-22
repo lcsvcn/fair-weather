@@ -6,7 +6,7 @@ import com.squareup.moshi.JsonClass
 import kotlinx.parcelize.Parcelize
 
 @JsonClass(generateAdapter = true)
-data class WeatherList(
+data class WeatherListResponse(
     @Json(name = "consolidated_weather")
     val weatherList: List<Weather> = emptyList()
 )
