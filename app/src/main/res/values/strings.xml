@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Faire Weather</string>
+    <string name="loading_message">Loading...</string>
+    <string name="weather_temperature_placeholder">8°</string>
+    <string name="weather_state_placeholder">Light Rain</string>
+    <string name="weather_temperature_low_placeholder">Low: 5°</string>
+    <string name="weather_temperature_high_placeholder">High: 9°</string>
+</resources>
