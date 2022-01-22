@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/light_blue"
     tools:context=".ui.WeatherListActivity">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -41,6 +42,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/margin_medium"
+        android:paddingBottom="@dimen/margin_medium"
         android:background="@android:color/transparent"
         android:backgroundTint="@android:color/transparent"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
@@ -49,7 +51,9 @@
     <LinearLayout
         android:id="@+id/ctn_alert_message"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/margin_medium"
+        android:layout_height="wrap_content"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
         android:contentDescription="@string/empty_title"
         android:gravity="center"
         android:orientation="vertical">
@@ -59,8 +63,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
-            android:maxWidth="196dp"
-            android:maxHeight="196dp"
+            android:background="@drawable/bg_box_white_top_16_bottom_16"
+            android:maxWidth="148dp"
+            android:maxHeight="148dp"
             android:scaleType="fitCenter"
             android:src="@drawable/ic_unknown_weather" />
 
@@ -68,19 +73,25 @@
             android:id="@+id/txt_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_small"
+            android:layout_marginTop="@dimen/margin_medium"
+            android:background="@drawable/bg_box_white_top_16_bottom_16"
             android:gravity="center"
+            android:padding="@dimen/margin_small"
             android:text="@string/empty_title"
-            android:textSize="24sp"
+            android:textColor="@color/black"
+            android:textSize="22sp"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/txt_message"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="6dp"
+            android:layout_marginTop="@dimen/margin_small"
+            android:background="@drawable/bg_box_white_top_16_bottom_16"
             android:gravity="center"
-            android:text="@string/empty_message"/>
+            android:padding="@dimen/margin_small"
+            android:text="@string/empty_message"
+            android:textColor="@color/black" />
     </LinearLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -103,11 +114,12 @@
         style="?android:attr/progressBarStyleLarge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="@dimen/margin_small"
         android:layout_gravity="center"
         android:background="@drawable/bg_lavander_rounded"
         android:indeterminateTint="@android:color/holo_purple"
+        android:padding="@dimen/margin_small"
         android:visibility="gone"
         tools:visibility="visible" />
+
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

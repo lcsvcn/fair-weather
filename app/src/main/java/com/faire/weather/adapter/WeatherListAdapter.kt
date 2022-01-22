@@ -7,8 +7,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.faire.weather.R
 import com.faire.weather.arch.BaseViewHolder
 import com.faire.weather.arch.bind
-import com.faire.weather.data.Weather
+import com.faire.weather.api.data.Weather
 import com.faire.weather.adapter.WeatherListAdapter.WeatherViewHolder
+import com.faire.weather.arch.addLabelHigh
+import com.faire.weather.arch.addLabelLow
 import com.faire.weather.arch.formatCelsius
 import java.util.TreeMap
 
@@ -41,20 +43,24 @@ class WeatherListAdapter : RecyclerView.Adapter<WeatherViewHolder>() {
         private val txtWeatherState: TextView by bind(R.id.txt_weather_state)
         private val txtHighTemperature: TextView by bind(R.id.txt_high_temperature)
         private val txtLowTemperature: TextView by bind(R.id.txt_low_temperature)
-        private val imgWeatherIcon: ImageView by bind(R.id.txt_low_temperature)
+        private val txtDate: TextView by bind(R.id.txt_date)
+        private val imgWeatherIcon: ImageView by bind(R.id.img_weather_icon)
 
         fun bind(weather: Weather) {
             weather.currentTemperature?.let {
                 txtCurrentTemperature.text = it.formatCelsius()
             }
             weather.highTemperature?.let {
-                txtHighTemperature.text = it.formatCelsius()
+                txtHighTemperature.text = it.formatCelsius().addLabelHigh()
             }
             weather.lowTemperature?.let {
-                txtLowTemperature.text = it.formatCelsius()
+                txtLowTemperature.text = it.formatCelsius().addLabelLow()
             }
             weather.stateName?.let {
                 txtWeatherState.text = it
+            }
+            weather.date?.let{
+                txtDate.text = it
             }
             weather.stateAbbreviated?.let {
                 imgWeatherIcon.setBackgroundResource(getDrawableIdFromName(it))

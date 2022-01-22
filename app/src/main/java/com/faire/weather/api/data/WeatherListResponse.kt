@@ -1,4 +1,4 @@
-package com.faire.weather.data
+package com.faire.weather.api.data
 
 import android.os.Parcelable
 import com.squareup.moshi.Json

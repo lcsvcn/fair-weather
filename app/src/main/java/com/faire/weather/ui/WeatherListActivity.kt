@@ -12,49 +12,84 @@ import com.faire.weather.databinding.ActivityWeatherListBinding
 import com.faire.weather.viewmodel.WeatherListViewModel
 import androidx.activity.viewModels
 import com.faire.weather.R
-import retrofit2.Retrofit.Builder
-import retrofit2.converter.moshi.MoshiConverterFactory
 import androidx.appcompat.widget.SearchView
+import com.google.android.material.appbar.AppBarLayout
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import timber.log.Timber
 
 class WeatherListActivity : AppCompatActivity() {
-
-    private val viewModel: WeatherListViewModel by viewModels()
 
     private val binding by lazy { ActivityWeatherListBinding.inflate(layoutInflater) }
 
     private var adapter by lazy { WeatherListAdapter() }
 
+    private val viewModel: WeatherListViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(layout.activity_weather_list)
+        setContentView(binding.root)
 
-        viewModel.setupRetrofit()
+        viewModel.setupApi()
         setupViews()
 
         handleLoadingState()
         handleErrorState()
         handleEmptyListState()
-        handleScrollTopState()
+        handleListListState()
+        handleScrollState()
     }
 
     private fun setupViews() {
         with(binding) {
             rcvWeatherList.adapter = this@WeatherListActivity.adapter
 
-            btnScrollToTop.setOnClickListener { viewModel.onScrollToTopClick() }
-            btnScrollToTop.setOnClickListener { viewModel.onScrollToTopClick() }
+            btnScrollToTop.setOnClickListener { viewModel.onFabScrollTopTopClick() }
+            ctnAppBar.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { barLayout, verticalOffset ->
+                val scrollRange = barLayout?.totalScrollRange ?: 0
+                if (scrollRange + verticalOffset == 0) {
+                    btnScrollToTop.visible()
+                } else {
+                    btnScrollToTop.gone()
+                }
+            })
             ctnSearch.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                 override fun onQueryTextSubmit(query: String): Boolean {
-                    viewModel.onQueryTextSubmit(query)
+                    CoroutineScope(Dispatchers.IO).launch {
+                        viewModel.showLoading()
+                        viewModel.onQueryTextSubmit(query)
+                        viewModel.hideLoading()
+                    }
                     return false
                 }
 
-                override fun onQueryTextChange(newText: String) = false
+                override fun onQueryTextChange(newText: String): Boolean {
+                    Timber.i("onQueryTextChange")
+                    if(newText.isBlank()) {
+                        viewModel.showEmptyState()
+                    }
+                    return false
+                }
             })
         }
     }
 
+    private fun onScrollToTopClick() {
+
+    }
+
+    private fun handleScrollState() {
+        viewModel.scrollLiveData.observe(this, {
+            with(binding) {
+                ctnAppBar.setExpanded(true)
+                rcvWeatherList.apply {
+                    stopScroll()
+                    layoutManager?.scrollToPosition(0)
+                }
+            }
+        })
+    }
     private fun handleLoadingState() {
         viewModel.loadingLiveData.observe(this, {
             with(binding) {
@@ -72,6 +107,7 @@ class WeatherListActivity : AppCompatActivity() {
             with(binding) {
                 if (it.title.isNotBlank() && it.message.isNotBlank()) {
                     ctnAlertMessage.visible()
+                    rcvWeatherList.gone()
                     txtTitle.text = it.title
                     txtMessage.text = it.message
                 } else {
@@ -86,8 +122,9 @@ class WeatherListActivity : AppCompatActivity() {
             with(binding) {
                 if (isEmpty) {
                     ctnAlertMessage.visible()
+                    rcvWeatherList.gone()
                     txtTitle.text = getString(R.string.empty_title);
-                    txtTitle.text = getString(R.string.empty_message);
+                    txtMessage.text = getString(R.string.empty_message);
                 } else {
                     ctnAlertMessage.gone()
                 }
@@ -95,15 +132,10 @@ class WeatherListActivity : AppCompatActivity() {
         })
     }
 
-    private fun handleScrollTopState() {
-        viewModel.scrollLiveData.observe(this, {
-            with(binding) {
-                ctnAppBar.setExpanded(true)
-                rcvWeatherList.apply {
-                    stopScroll()
-                    layoutManager?.scrollToPosition(0)
-                }
-            }
+    private fun handleListListState() {
+        viewModel.listLiveData.observe(this, {
+            adapter.setList(it)
+            binding.rcvWeatherList.visible()
         })
     }
 }

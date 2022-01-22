@@ -14,30 +14,30 @@
         android:layout_width="64dp"
         android:layout_height="64dp"
         android:scaleType="centerCrop"
-        android:src="@drawable/ic_c"
+        android:layout_marginRight="@dimen/margin_small"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.4"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/txt_current_temperature"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/txt_current_temperature"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
+        android:layout_marginLeft="@dimen/margin_extra_large"
         android:text="@string/weather_temperature_placeholder"
         android:textColor="@color/black"
         android:textSize="48sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@id/img_weather_icon"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/txt_weather_state"
+        android:id="@+id/txt_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginVertical="8dp"
-        android:text="@string/weather_state_placeholder"
+        android:layout_marginVertical="@dimen/margin_small"
+        android:text="@string/weather_date_placeholder"
         android:textColor="@color/black"
         android:textSize="14sp"
         android:textStyle="italic"
@@ -46,10 +46,23 @@
         app:layout_constraintTop_toBottomOf="@id/txt_current_temperature" />
 
     <TextView
+        android:id="@+id/txt_weather_state"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="@dimen/margin_small"
+        android:text="@string/weather_state_placeholder"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        android:textStyle="italic"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/txt_date" />
+
+    <TextView
         android:id="@+id/txt_low_temperature"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginVertical="8dp"
+        android:layout_marginVertical="@dimen/margin_small"
         android:text="@string/weather_temperature_low_placeholder"
         android:textColor="@color/black"
         android:textSize="18sp"
@@ -61,7 +74,7 @@
         android:id="@+id/txt_high_temperature"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginVertical="8dp"
+        android:layout_marginVertical="@dimen/margin_small"
         android:text="@string/weather_temperature_high_placeholder"
         android:textColor="@color/black"
         android:textSize="18sp"

@@ -3,10 +3,11 @@
     <string name="loading_message">Loading…</string>
     <string name="error_title">Ops! We run into a problem.</string>
     <string name="empty_title">There is nothing to see here…</string>
-    <string name="empty_message">Search some place to show the weather</string>
+    <string name="empty_message">Search a city to show the weather for the next days</string>
     <string name="error_message">Sorry about that, please try again later.</string>
     <string name="weather_temperature_placeholder">8°</string>
     <string name="weather_state_placeholder">Light Rain</string>
+    <string name="weather_date_placeholder">24-12-2022</string>
     <string name="weather_temperature_low_placeholder">Low: 5°</string>
     <string name="weather_temperature_high_placeholder">High: 9°</string>
     <string name="scroll_to_top">Scroll to Top</string>

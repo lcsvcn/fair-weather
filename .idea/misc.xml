@@ -9,8 +9,8 @@
         <entry key="app/src/main/res/drawable/ic_rain.xml" value="0.18645833333333334" />
         <entry key="app/src/main/res/drawable/ic_weather_unknown.xml" value="0.3302083333333333" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.22205510894896915" />
-        <entry key="app/src/main/res/layout/activity_weather_list.xml" value="0.323602429418473" />
-        <entry key="app/src/main/res/layout/item_weather_card.xml" value="0.416913550346993" />
+        <entry key="app/src/main/res/layout/activity_weather_list.xml" value="0.21409671425980017" />
+        <entry key="app/src/main/res/layout/item_weather_card.xml" value="0.2857142857142857" />
       </map>
     </option>
   </component>
