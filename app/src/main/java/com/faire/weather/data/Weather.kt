@@ -11,7 +11,6 @@ data class WeatherList(
     val weatherList: List<Weather> = emptyList()
 )
 
-
 @Parcelize
 @JsonClass(generateAdapter = true)
 data class Weather(
