@@ -13,6 +13,7 @@ import com.faire.weather.viewmodel.WeatherListViewModel
 import androidx.activity.viewModels
 import com.faire.weather.R
 import androidx.appcompat.widget.SearchView
+import com.faire.weather.arch.EmptyState
 import com.google.android.material.appbar.AppBarLayout
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -31,7 +32,9 @@ class WeatherListActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
+        // Remove from viewModel
         viewModel.setupApi()
+
         setupViews()
 
         handleLoadingState()
@@ -75,10 +78,6 @@ class WeatherListActivity : AppCompatActivity() {
         }
     }
 
-    private fun onScrollToTopClick() {
-
-    }
-
     private fun handleScrollState() {
         viewModel.scrollLiveData.observe(this, {
             with(binding) {
@@ -90,6 +89,7 @@ class WeatherListActivity : AppCompatActivity() {
             }
         })
     }
+
     private fun handleLoadingState() {
         viewModel.loadingLiveData.observe(this, {
             with(binding) {
@@ -118,9 +118,9 @@ class WeatherListActivity : AppCompatActivity() {
     }
 
     private fun handleEmptyListState() {
-        viewModel.emptyLiveData.observe(this, { isEmpty ->
+        viewModel.emptyLiveData.observe(this, {
             with(binding) {
-                if (isEmpty) {
+                if (it is EmptyState.Show) {
                     ctnAlertMessage.visible()
                     rcvWeatherList.gone()
                     txtTitle.text = getString(R.string.empty_title);

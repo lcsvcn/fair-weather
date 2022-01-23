@@ -2,41 +2,40 @@ package com.faire.weather.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.faire.weather.api.data.SearchWeatherResponse
 import com.faire.weather.api.data.Weather
-import com.faire.weather.api.data.WeatherListResponse
 import com.faire.weather.arch.ErrorState
 import com.faire.weather.arch.LoadingState
 import com.faire.weather.api.interfaces.MetaWeatherService
-import javax.inject.Inject
+import com.faire.weather.arch.EmptyState
+import com.faire.weather.arch.ScrollState
 import retrofit2.Retrofit.Builder
 import retrofit2.converter.moshi.MoshiConverterFactory
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.withContext
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import okhttp3.logging.HttpLoggingInterceptor.Level.BODY
 import retrofit2.HttpException
-import retrofit2.Response
 
-
-class WeatherListViewModel @Inject constructor() : ViewModel() {
+class WeatherListViewModel : ViewModel() {
 
     val loadingLiveData = MutableLiveData<LoadingState>()
     val errorLiveData = MutableLiveData<ErrorState>()
-    val emptyLiveData = MutableLiveData<Boolean>()
+    val emptyLiveData = MutableLiveData<EmptyState>()
     val listLiveData = MutableLiveData<List<Weather>>()
-    val scrollLiveData = MutableLiveData<Boolean>()
+    val scrollLiveData = MutableLiveData<ScrollState>()
 
+    // @Inject
     private lateinit var api: MetaWeatherService
 
     companion object {
         const val BASE_URL = "https://www.metaweather.com/"
     }
 
-    fun showEmptyState() = emptyLiveData.postValue(true)
+    fun showEmptyState() = emptyLiveData.postValue(EmptyState.Show)
 
+    // Improvement:
+    // I would move this to a retrofit factory, since this should
+    // not be into the view model since this is app functionality
     fun setupApi() {
         val interceptor = HttpLoggingInterceptor()
         interceptor.level = BODY
@@ -58,7 +57,9 @@ class WeatherListViewModel @Inject constructor() : ViewModel() {
         doSearchLocation(query)
     }
 
-    fun onFabScrollTopTopClick() = scrollLiveData.postValue(true)
+    fun onFabScrollTopTopClick() = scrollLiveData.postValue(ScrollState.Top)
+
+    private fun hideEmptyState() = emptyLiveData.postValue(EmptyState.Hide)
 
     private suspend fun doSearchLocation(search: String) {
         val response = api.getWeatherId(search)
@@ -97,9 +98,9 @@ class WeatherListViewModel @Inject constructor() : ViewModel() {
             if (response.isSuccessful) {
                 response.body()?.let {
                     if (it.weatherList.isEmpty()) {
-                        emptyLiveData.postValue(true)
+                        showEmptyState()
                     } else {
-                        emptyLiveData.postValue(false)
+                        hideEmptyState()
                     }
                     listLiveData.postValue(it.weatherList)
                 }
