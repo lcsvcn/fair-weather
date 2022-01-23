@@ -10,5 +10,6 @@
     <string name="weather_date_placeholder">24-12-2022</string>
     <string name="weather_temperature_low_placeholder">Low: 5°</string>
     <string name="weather_temperature_high_placeholder">High: 9°</string>
+    <string name="weather_humidity_placeholder">Humidity: 20</string>
     <string name="scroll_to_top">Scroll to Top</string>
 </resources>

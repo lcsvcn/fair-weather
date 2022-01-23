@@ -2,6 +2,7 @@
 <resources>
     <dimen name="radius_corner">8dp</dimen>
     <dimen name="margin_medium">16dp</dimen>
+    <dimen name="margin_large">32dp</dimen>
     <dimen name="margin_extra_large">64dp</dimen>
     <dimen name="margin_small">8dp</dimen>
     <dimen name="elevation_small">2dp</dimen>

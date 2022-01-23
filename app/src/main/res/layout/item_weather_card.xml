@@ -4,17 +4,17 @@
     android:id="@+id/item_investment_card_root"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="16dp"
+    android:layout_margin="@dimen/margin_medium"
     android:background="@drawable/bg_box_white_top_16_bottom_16"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:padding="@dimen/margin_small">
 
     <ImageView
         android:id="@+id/img_weather_icon"
         android:layout_width="64dp"
         android:layout_height="64dp"
+        android:layout_marginRight="@dimen/margin_medium"
         android:scaleType="centerCrop"
-        android:layout_marginRight="@dimen/margin_small"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintEnd_toStartOf="@id/txt_current_temperature"
         app:layout_constraintTop_toTopOf="parent" />
@@ -26,24 +26,24 @@
         android:layout_marginLeft="@dimen/margin_extra_large"
         android:text="@string/weather_temperature_placeholder"
         android:textColor="@color/black"
-        android:textSize="48sp"
+        android:textSize="42sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/img_weather_icon"
+        app:layout_constraintTop_toTopOf="@id/img_weather_icon" />
 
     <TextView
         android:id="@+id/txt_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginVertical="@dimen/margin_small"
+        android:layout_marginVertical="@dimen/margin_medium"
         android:text="@string/weather_date_placeholder"
         android:textColor="@color/black"
-        android:textSize="14sp"
         android:textStyle="italic"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/txt_current_temperature" />
+        app:layout_constraintTop_toBottomOf="@id/img_weather_icon" />
 
     <TextView
         android:id="@+id/txt_weather_state"
@@ -52,7 +52,6 @@
         android:layout_marginVertical="@dimen/margin_small"
         android:text="@string/weather_state_placeholder"
         android:textColor="@color/black"
-        android:textSize="14sp"
         android:textStyle="italic"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -65,8 +64,20 @@
         android:layout_marginVertical="@dimen/margin_small"
         android:text="@string/weather_temperature_low_placeholder"
         android:textColor="@color/black"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toStartOf="@id/txt_high_temperature"
+        app:layout_constraintEnd_toStartOf="@id/txt_humidity"
+        app:layout_constraintTop_toTopOf="@id/txt_humidity"
+        app:layout_constraintBottom_toBottomOf="@id/txt_humidity" />
+
+
+    <TextView
+        android:id="@+id/txt_humidity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="@dimen/margin_medium"
+        android:layout_marginTop="@dimen/margin_medium"
+        android:text="@string/weather_humidity_placeholder"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/txt_weather_state" />
 
@@ -74,13 +85,11 @@
         android:id="@+id/txt_high_temperature"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginVertical="@dimen/margin_small"
+        android:paddingVertical="@dimen/margin_small"
         android:text="@string/weather_temperature_high_placeholder"
         android:textColor="@color/black"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/txt_low_temperature"
-        app:layout_constraintTop_toBottomOf="@id/txt_weather_state" />
-
+        app:layout_constraintStart_toEndOf="@id/txt_humidity"
+        app:layout_constraintTop_toTopOf="@id/txt_humidity"
+        app:layout_constraintBottom_toBottomOf="@id/txt_humidity" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

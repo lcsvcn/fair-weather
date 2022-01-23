@@ -10,6 +10,7 @@ import com.faire.weather.arch.bind
 import com.faire.weather.api.data.Weather
 import com.faire.weather.adapter.WeatherListAdapter.WeatherViewHolder
 import com.faire.weather.arch.addLabelHigh
+import com.faire.weather.arch.addLabelHumidity
 import com.faire.weather.arch.addLabelLow
 import com.faire.weather.arch.formatCelsius
 import java.util.TreeMap
@@ -43,6 +44,7 @@ class WeatherListAdapter : RecyclerView.Adapter<WeatherViewHolder>() {
         private val txtWeatherState: TextView by bind(R.id.txt_weather_state)
         private val txtHighTemperature: TextView by bind(R.id.txt_high_temperature)
         private val txtLowTemperature: TextView by bind(R.id.txt_low_temperature)
+        private val txtHumidity: TextView by bind(R.id.txt_humidity)
         private val txtDate: TextView by bind(R.id.txt_date)
         private val imgWeatherIcon: ImageView by bind(R.id.img_weather_icon)
 
@@ -64,6 +66,10 @@ class WeatherListAdapter : RecyclerView.Adapter<WeatherViewHolder>() {
             }
             weather.stateAbbreviated?.let {
                 imgWeatherIcon.setBackgroundResource(getDrawableIdFromName(it))
+            }
+
+            weather.humidity?.let {
+                txtHumidity.text = it.addLabelHumidity()
             }
         }
     }
