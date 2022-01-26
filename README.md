@@ -1,4 +1,4 @@
-# Faire Weather App
+# Fair Weather App
 
 ### Library That I used:
 
